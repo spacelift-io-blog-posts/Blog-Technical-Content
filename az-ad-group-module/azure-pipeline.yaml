@@ -1,0 +1,32 @@
+stages:
+- stage: Build
+  displayName: Terraform-Plan  
+  jobs:
+  - job: TerraformPlan
+    displayName: Terraform-Plan
+    pool:
+      name: Private-Build-Agents
+    steps:
+    - checkout: self
+    - script: ls $(System.DefaultWorkingDirectory)
+    - task: TerraformInstaller@0
+      displayName: 'Use Terraform latest'
+
+    - task: TerraformCLI@0
+      displayName: Terraform-Init
+      inputs:
+        command: 'init'
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
+        backendType: 'azurerm'
+        backendServiceArm: 'IAC Service Connection-Azure'
+        backendAzureRmResourceGroupName: 'tf-rg'
+        backendAzureRmStorageAccountName: 'jacktfstatesa'
+        backendAzureRmContainerName: 'terraform'
+        backendAzureRmKey: 'adgroups.tfstate'
+
+    - task: TerraformCLI@0
+      displayName: Terraform-Plan
+      inputs:
+        command: 'plan'
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
+        environmentServiceName: 'RG Service Connection'

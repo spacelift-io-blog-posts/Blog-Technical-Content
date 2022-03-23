@@ -1,0 +1,40 @@
+- name: Examples with Loops
+  hosts: all
+  
+  tasks:
+  - name: "Create some files"
+    ansible.builtin.file:
+      state: touch
+      path: /tmp/{{ item }}
+    loop:
+      - example_file1
+      - example_file2
+      - example_file3
+
+  - name: "Create some files with dictionaries"
+    ansible.builtin.file:
+      state: touch
+      path: "/tmp/{{ item.filename }}"
+      mode: "{{ item.mode }}"
+    loop:
+      - { filename: 'example_file1', mode: '755'}
+      - { filename: 'example_file2', mode: '775'}
+      - { filename: 'example_file3', mode: '777'}
+
+  - name: Show all the hosts in the inventory
+    ansible.builtin.debug:
+      msg: "{{ item }}"
+    loop: "{{ groups['databases'] }}"
+  
+  - name: Execute when values in list are lower than 10
+    ansible.builtin.command: echo {{ item }}
+    loop: [ 100, 200, 3, 600, 7, 11 ]
+    when: item < 10
+
+
+  - name: Retry a task until we find the word “success” in the logs
+    shell: cat /var/log/example_log
+    register: result
+    until: result.stdout.find("success") != -1
+    retries: 10
+    delay: 15

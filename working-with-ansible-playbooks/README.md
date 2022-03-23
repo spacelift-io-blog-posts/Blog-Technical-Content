@@ -1,0 +1,2 @@
+# Working with Ansible Playbooks
+This repository includes all the files related to the [Working with Ansible Playbooks]() blog post. If you want to run the examples on this repo you can execute `vagrant up` from the top of this repository in order to spin up a local vm to target with Ansible. 

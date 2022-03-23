@@ -1,0 +1,37 @@
+- name: Example Simple Conditional
+  hosts: all
+  vars:
+    trigger_task: true
+  
+  tasks:
+  - name: Install nginx
+    apt:
+      name: "nginx"
+      state: present
+    when: trigger_task
+
+- name: Example Facts Conditionals 
+  hosts: all
+  vars:
+    supported_os:
+      - RedHat
+      - Fedora
+  
+  tasks:
+  - name: Install nginx
+    yum:
+      name: "nginx"
+      state: present
+    when: ansible_facts['distribution'] in supported_os
+
+- name: Example Registered Variables Conditionals
+  hosts: all
+  
+  tasks:
+  - name: Register an example variable
+    ansible.builtin.shell: cat /etc/hosts
+    register: hosts_contents
+
+  - name: Check if hosts file contains "localhost"
+    ansible.builtin.shell: echo "/etc/hosts contains localhost"
+    when: hosts_contents.stdout.find(localhost) != -1

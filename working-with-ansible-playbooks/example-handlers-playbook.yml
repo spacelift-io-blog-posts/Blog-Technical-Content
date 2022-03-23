@@ -1,0 +1,17 @@
+
+- name: Example with handler - Update apache config
+  hosts: webservers
+  
+  tasks:
+  - name: Write the apache config file
+    ansible.builtin.template:
+      src: /srv/httpd.j2
+      dest: /etc/httpd.conf
+    notify:
+    - Restart apache
+
+  handlers:
+    - name: Restart apache
+      ansible.builtin.service:
+        name: httpd
+        state: restarted

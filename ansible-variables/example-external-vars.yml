@@ -1,0 +1,17 @@
+- name: Example External Variables file
+  hosts: all
+  vars_files:
+    - ./vars/variables.yml
+
+  tasks:
+  - name: Print the value of variable docker_version
+    debug: 
+      msg: "{{ docker_version}} "
+  
+  - name: Print the value of group variable http_port
+    debug: 
+      msg: "{{ http_port}} "
+  
+  - name: Print the value of host variable app_version
+    debug: 
+      msg: "{{ app_version}} "

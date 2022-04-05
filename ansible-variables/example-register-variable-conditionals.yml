@@ -1,0 +1,12 @@
+- name: Example Registered Variables Conditionals
+  hosts: all
+  
+  tasks:
+  - name: Register an example variable
+    shell: cat /etc/hosts
+    register: hosts_contents
+
+  - name: Check if hosts file contains the word "localhost"
+    debug:
+      msg: "/etc/hosts file contains the word localhost"
+    when: hosts_contents.stdout.find("localhost") != -1

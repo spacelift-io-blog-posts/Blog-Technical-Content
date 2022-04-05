@@ -1,0 +1,39 @@
+- name: Example Anchors and Aliases
+  hosts: all
+  become: yes
+  vars:
+    user_groups: &user_groups
+     - devs
+     - support
+    user_1:
+        user_info: &user_info
+            name: bob
+            groups: *user_groups
+            state: present
+            create_home: yes
+    user_2:
+        user_info:
+            <<: *user_info
+            name: christina
+    user_3:
+        user_info:
+            <<: *user_info
+            name: jessica
+            groups: support
+
+  tasks:
+  - name: Add several groups
+    ansible.builtin.group:
+      name: "{{ item }}"
+      state: present
+    loop: "{{ user_groups }}"
+
+  - name: Add several users
+    ansible.builtin.user:
+      <<: *user_info
+      name: "{{ item.user_info.name }}"
+      groups: "{{ item.user_info.groups }}"
+    loop:
+      - "{{ user_1 }}"
+      - "{{ user_2 }}"
+      - "{{ user_3 }}"

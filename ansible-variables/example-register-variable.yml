@@ -1,0 +1,12 @@
+- name: Example Register Variable Playbook
+  hosts: all
+  
+  tasks:
+  - name: Run a script and register the output as a variable
+    shell: "find hosts"
+    args:
+      chdir: "/etc"
+    register: find_hosts_output
+  - name: Use the output variable of the previous task
+    debug:
+      var: find_hosts_output

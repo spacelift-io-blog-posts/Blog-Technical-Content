@@ -1,0 +1,38 @@
+- name: Example Variable Types
+  hosts: all
+  vars:
+    username: bob
+    version: 
+      - v1
+      - v2
+      - v3
+    users: 
+      - user_1: maria
+      - user_2: peter
+      - user_3: sophie
+    cidr_blocks:
+      production:
+        vpc_cidr: "172.31.0.0/16"
+      staging:
+        vpc_cidr: "10.0.0.0/24"
+
+
+
+  tasks:
+  - name: Add the user {{ username }}
+    ansible.builtin.user:
+      name: "{{ username }}"
+      state: present
+    become: yes
+  
+  - name: Print versions
+    ansible.builtin.debug:
+      var: version
+  
+  - name: Print users
+    ansible.builtin.debug:
+      var: users
+  
+  - name: Print production vpc_cidr
+    ansible.builtin.debug:
+      var: cidr_blocks['production']['vpc_cidr']

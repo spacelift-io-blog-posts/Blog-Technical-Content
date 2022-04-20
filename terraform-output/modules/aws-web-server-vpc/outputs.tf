@@ -7,4 +7,3 @@ output "subnet_id" {
   description = "IDs of the VPC subnet"
   value       = aws_subnet.web_server_subnet.id
 }
-

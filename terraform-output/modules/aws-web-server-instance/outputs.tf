@@ -1,5 +1,5 @@
-output "instance_ids" {
-  description = "IDs of EC2 instance"
+output "instance_id" {
+  description = "ID of EC2 instance"
   value       = aws_instance.web_server_instance.id
 }
 

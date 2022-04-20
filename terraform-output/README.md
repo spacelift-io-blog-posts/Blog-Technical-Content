@@ -1,0 +1,2 @@
+# Terraform Ouputs
+This repository includes all the files related to the [Terraform Outputs]() blog post. If you want to run the examples on this repo you need [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli) installed and an [AWS account](https://aws.amazon.com/console/).

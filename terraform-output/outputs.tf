@@ -1,10 +1,10 @@
 output "vpc_id" {
-  description = " ID of the vpc"
+  description = "ID of the vpc"
   value       = module.aws_web_server_vpc.vpc_id
 }
 
 output "instance_id" {
-  description = "IDs of EC2 instance"
+  description = "ID of EC2 instance"
   value       = module.aws_web_server_instance.instance_id
 }
 

@@ -1,4 +1,4 @@
-resource "aws_vpc" "web_server_vpc" {
+resource "aws_vpc" "web_server" {
   cidr_block       = var.vpc_cidr_block
   instance_tenancy = "default"
 
@@ -7,8 +7,8 @@ resource "aws_vpc" "web_server_vpc" {
   }
 }
 
-resource "aws_subnet" "web_server_subnet" {
-  vpc_id                  = aws_vpc.web_server_vpc.id
+resource "aws_subnet" "web_server" {
+  vpc_id                  = aws_vpc.web_server.id
   cidr_block              = var.subnet_cidr_block
   map_public_ip_on_launch = true
   availability_zone       = var.aws_az
@@ -18,19 +18,19 @@ resource "aws_subnet" "web_server_subnet" {
   }
 }
 
-resource "aws_internet_gateway" "web_server_igw" {
-  vpc_id = aws_vpc.web_server_vpc.id
+resource "aws_internet_gateway" "web_server" {
+  vpc_id = aws_vpc.web_server.id
 
   tags = {
     Name = var.igw_name
   }
 }
 
-resource "aws_route_table" "web_server_rt" {
-  vpc_id = aws_vpc.web_server_vpc.id
+resource "aws_route_table" "web_server" {
+  vpc_id = aws_vpc.web_server.id
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.web_server_igw.id
+    gateway_id = aws_internet_gateway.web_server.id
   }
 
   tags = {
@@ -38,7 +38,7 @@ resource "aws_route_table" "web_server_rt" {
   }
 }
 
-resource "aws_route_table_association" "web_server_rt_assoscation" {
-  subnet_id      = aws_subnet.web_server_subnet.id
-  route_table_id = aws_route_table.web_server_rt.id
+resource "aws_route_table_association" "web_server" {
+  subnet_id      = aws_subnet.web_server.id
+  route_table_id = aws_route_table.web_server.id
 }

@@ -7,7 +7,7 @@ data "aws_ami" "amazon_linux" {
   }
 }
 
-resource "aws_security_group" "web_server_sc" {
+resource "aws_security_group" "web_server" {
   name        = var.ec2_security_group_name
   description = var.ec2_security_group_description
   vpc_id      = var.vpc_id
@@ -34,12 +34,12 @@ resource "aws_security_group" "web_server_sc" {
   }
 }
 
-resource "aws_instance" "web_server_instance" {
+resource "aws_instance" "web_server" {
   ami           = data.aws_ami.amazon_linux.id
   instance_type = var.ec2_instance_type
 
   subnet_id              = var.subnet_id
-  vpc_security_group_ids = [aws_security_group.web_server_sc.id]
+  vpc_security_group_ids = [aws_security_group.web_server.id]
 
   tags = {
     Name = var.ec2_instance_name

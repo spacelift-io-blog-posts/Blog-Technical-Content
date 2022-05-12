@@ -35,3 +35,8 @@ resource "aws_instance" "billing_server" {
     "service" = "billing"
   }
 }
+
+module "child" {
+  source = "./modules"
+  instance_type = var.instance_type
+}

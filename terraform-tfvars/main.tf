@@ -27,10 +27,16 @@ data "aws_ami" "ubuntu" {
   }
 }
 
+variable "instance_type" {
+  type = string
+  default = "t2.micro"
+  description = "EC2 instance type"
+}
+
 //spinning up billing server
 resource "aws_instance" "billing_server" {
   ami = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
+  instance_type = var.instance_type
   tags = {
     "service" = "billing"
   }

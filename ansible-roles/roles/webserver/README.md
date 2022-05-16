@@ -23,9 +23,8 @@ Default nginx installation variables.
 * nginx_custom_directory: Custom directory for nginx installation
 
 ### vars/main.yml
-In this case, our variables are the same as the defaults but we override them from this directory.
+Here we define variables that have high precedence and aren't intended to be changed by the play.
 
-* nginx_version: Specific version of nginx to install
 * nginx_custom_directory: Custom directory for nginx installation
 
 Dependencies

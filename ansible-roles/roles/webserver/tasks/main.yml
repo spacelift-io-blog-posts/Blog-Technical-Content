@@ -4,7 +4,7 @@
   ansible.builtin.apt: 
     update_cache: yes
     cache_valid_time: 3600
-    upgrade: yes
+    upgrade: "yes"
 
 - name: "Install Nginx to version {{ nginx_version }}"
   ansible.builtin.apt: 

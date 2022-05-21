@@ -1,7 +1,7 @@
 server {
         listen 80;
         listen [::]:80;
-        root /home/ubuntu/nginx;
+        root {{ nginx_custom_directory }};
         index index.html;
         location / {
                 try_files $uri $uri/ =404;

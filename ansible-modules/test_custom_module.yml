@@ -1,0 +1,11 @@
+- name: Test my new module
+  hosts: localhost
+  tasks:
+  - name: Run the new module
+    epoch_converter:
+      epoch_timestamp: '1657382362'
+      state_changed: yes
+    register: show_output
+  - name: Show Output
+    debug:
+      msg: '{{ show_output }}'

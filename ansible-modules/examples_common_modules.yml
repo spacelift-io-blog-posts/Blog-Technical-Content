@@ -1,0 +1,85 @@
+- name: Examples Common Modules
+  hosts: all
+  vars:
+    nginx_version: 1.18.0-0ubuntu1.3
+
+  tasks:
+  - name: "Install Nginx to version {{ nginx_version }} with apt module"
+    ansible.builtin.apt: 
+      name: "nginx={{ nginx_version }}"
+      state: present
+  
+  - name: Update the repository cache and update package "nginx" to latest version
+    ansible.builtin.apt:
+      name: nginx
+      state: latest
+      update_cache: yes
+  
+  - name: Update the repository cache and update package "nginx" to latest version
+    ansible.builtin.yum:
+      name: nginx
+      state: latest
+      update_cache: yes
+
+  - name: Restart docker service
+    ansible.builtin.service:
+      name: docker
+      state: restarted
+  
+  - name: Create the directory "/etc/test" if it doesnt exist and set permissions
+    ansible.builtin.file:
+      path: /etc/test
+      state: directory
+      mode: '0750'
+  
+  - name: Copy file with owner and permissions
+    ansible.builtin.copy:
+      src: /example_directory/test
+      dest: /target_directory/test
+      owner: joe
+      group: admins
+      mode: '0755'
+
+  - name: Copy and template the Nginx configuration file to the host
+    ansible.builtin.template:
+      src: templates/nginx.conf.j2
+      dest: /etc/nginx/sites-available/default
+
+  - name: Add a line to a file if it doesnt exist
+    ansible.builtin.lineinfile:
+      path: /tmp/example_file
+      line: "This line must exist in the file"
+      state: present
+
+  - name: Add a block of configuration options at the end of the file if it doesnt exist
+    ansible.builtin.blockinfile:
+      path: /etc/example_dictory/example.conf
+      block: |
+        feature1_enabled: true
+        feature2_enabled: false
+        feature2_enabled: true
+      insertafter: EOF
+
+  - name: Run daily DB backup script at 00:00
+    ansible.builtin.cron:
+      name: "Run daily DB backup script at 00:00"
+      minute: "0"
+      hour: "0"
+      job: "/usr/local/bin/db_backup_script.sh > /var/log/db_backup_script.sh.log 2>&1"
+  
+  - name: Wait until a string is in the file before continuing
+    ansible.builtin.wait_for:
+      path: /tmp/example_file
+      search_regex: "String exists, continue"
+
+  - name: Execute a script in remote shell and capture the output to file
+    ansible.builtin.shell: script.sh >> script_output.log
+
+  - name: Install Docker dependencies
+    ansible.builtin.apt:
+      name:
+        - curl
+        - ca-certificates
+        - gnupg2
+        - lsb-release
+      state: latest

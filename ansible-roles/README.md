@@ -1,1 +1,1 @@
-This repository includes content related to the [Ansible Roles]() demo on Spacelift blog.
+This repository includes content related to the [Ansible Roles](https://spacelift.io/blog/ansible-roles) demo on Spacelift blog.

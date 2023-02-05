@@ -106,6 +106,10 @@ class MyStack(TerraformStack):
                                                                                                     target_id=web_server.id,
                                                                                                     port=80
                                                                                                     )
+        
+        TerraformOutput(self, "alb_dns",
+                        value=web_server_alb.dns_name
+                        )
 
 
 app = App()
